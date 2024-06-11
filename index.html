@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Todo App</title>
+		<!-- import box icons -->
+		<link
+			href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+			rel="stylesheet"
+		/>
+
+		<!-- import css files -->
+		<link rel="stylesheet" href="css/main.css" />
+	</head>
+	<body>
+		<div class="modal">
+			<div class="title">
+				<p>Enter task title</p>
+				<input type="text" id="ttitle" />
+			</div>
+			<div class="tag">
+				<p>Category</p>
+				<input id="tag" type="text" />
+			</div>
+			<div class="dueDate">
+				<p>Choose a day</p>
+				<select id="day">
+					<option value="sat">Saturday</option>
+					<option value="sun">Sunday</option>
+					<option value="mon">Monday</option>
+					<option value="tue">Tuesday</option>
+					<option value="wed">Wedesday</option>
+					<option value="thu">Thurusday</option>
+					<option value="fri">Friday</option>
+				</select>
+			</div>
+			<div class="priority">
+				<p>Choose Priority</p>
+				<select id="prioripty">
+					<option value="hactive">High</option>
+					<option value="mactive">Medium</option>
+					<option value="lactive">Low</option>
+				</select>
+			</div>
+			<div class="level">
+				<p>How hard it is ?</p>
+				<select id="level">
+					<option value="easy">Easy</option>
+					<option value="moderate">Moderate</option>
+					<option value="hard">Hard</option>
+				</select>
+			</div>
+			<div class="buttons">
+				<button id="add">Add</button>
+				<button id="cancel">cancel</button>
+			</div>
+		</div>
+		<div class="app">
+			<div class="todo">
+				<div class="header">
+					<h1><i class="bx bx-notepad"></i> todo</h1>
+					<button id="addTask">
+						<i
+							class="bx bx-message-square-add bx-flip-horizontal"
+						></i>
+					</button>
+				</div>
+				<div class="tasks"></div>
+			</div>
+
+			<div class="done">
+				<div class="header">
+					<h1><i class="bx bxs-calendar-check"></i>Done</h1>
+					<button id="delete">
+						<i class="bx bx-trash bx-flip-horizontal"></i>
+					</button>
+				</div>
+				<div class="tasks"></div>
+			</div>
+		</div>
+		<!-- js files -->
+		<script src="https://unpkg.com/@popperjs/core@2"></script>
+		<script src="https://unpkg.com/tippy.js@6"></script>
+		<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+		<script src="js/main.js"></script>
+	</body>
+</html>

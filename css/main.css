@@ -1,0 +1,218 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+body {
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.modal {
+  position: fixed;
+  left: 50%;
+  top: -100%;
+  transform: translateX(-50%);
+  background-color: #111;
+  width: 30%;
+  box-shadow: 0 10px 5px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  color: #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  transition: top 300ms ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: none;
+  align-items: none;
+  gap: 15px;
+}
+.modal > div:not(:last-child) {
+  display: flex;
+  flex-direction: column;
+  justify-content: none;
+  align-items: none;
+  gap: 5px;
+}
+.modal > div:not(:last-child) p {
+  font-size: 1.3rem;
+}
+.modal > div:not(:last-child) input,
+.modal > div:not(:last-child) select {
+  border: none;
+  outline: none;
+  padding: 10px 15px;
+  font-family: inherit;
+  font-size: 1.3rem;
+  border-radius: 5px;
+}
+.modal .buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: none;
+  align-items: center;
+  gap: 10px;
+}
+.modal .buttons button {
+  border: none;
+  outline: none;
+  padding: 10px 15px;
+  width: 100px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  font-weight: bold;
+}
+.modal .buttons button:nth-child(1) {
+  background-color: #68a537;
+  color: #fff;
+}
+.modal.popUp {
+  top: 5px;
+}
+
+.app {
+  display: flex;
+  flex-direction: row;
+  justify-content: none;
+  align-items: flex-start;
+  gap: 10px;
+  width: 60%;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #2b1887;
+  max-height: calc(100vh - 20px);
+}
+.app > div {
+  width: 50%;
+  min-height: 150px;
+  background-color: #d5ccff;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: none;
+  align-items: none;
+  gap: 10px;
+}
+.app > div .header {
+  display: flex;
+  flex-direction: none;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.app > div .header > h1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: none;
+  align-items: center;
+  gap: 10px;
+  text-transform: capitalize;
+  color: #2b1887;
+  font-weight: 400;
+  font-size: 2rem;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.app > div .header button {
+  outline: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  background-color: transparent;
+  color: #2b1887;
+}
+.app > div > .tasks {
+  display: flex;
+  flex-direction: column;
+  justify-content: none;
+  align-items: none;
+  gap: 10px;
+  min-height: inherit;
+}
+.app > div > .tasks .onTop {
+  position: relative;
+  z-index: 999;
+}
+.app > div > .tasks .card {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  background: #fff;
+  width: 100%;
+  height: 150px;
+  border-radius: 5px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: none;
+  gap: 0px;
+}
+.app > div > .tasks .card.drag {
+  box-shadow: 0 10px 5px rgba(43, 24, 135, 0.2509803922);
+}
+.app > div > .tasks .card h2 {
+  color: #222;
+}
+.app > div > .tasks .card .info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0px;
+}
+.app > div > .tasks .card .info .hactive {
+  background-color: #e9584f !important;
+}
+.app > div > .tasks .card .info .mactive {
+  background-color: #e1bc03 !important;
+}
+.app > div > .tasks .card .info .lactive {
+  background-color: #2d41a7 !important;
+}
+.app > div > .tasks .card .info .prio {
+  display: flex;
+  flex-direction: row;
+  justify-content: none;
+  align-items: center;
+  gap: 10px;
+}
+.app > div > .tasks .card .info .prio .prioripty {
+  display: flex;
+  flex-direction: row;
+  justify-content: none;
+  align-items: center;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 0 10px;
+}
+.app > div > .tasks .card .info .prio .prioripty .circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #d9d9d9;
+}
+.app > div > .tasks .card .info .prio > h3 {
+  background-color: #2b1887;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+.app > div > .tasks .card .info > h3 {
+  color: #2b1887;
+  text-transform: capitalize;
+  font-weight: 400;
+}/*# sourceMappingURL=main.css.map */
