@@ -15,7 +15,7 @@ body {
   top: -100%;
   transform: translateX(-50%);
   background-color: #111;
-  width: 30%;
+  width: 50%;
   box-shadow: 0 10px 5px rgba(0, 0, 0, 0.5);
   z-index: 1000;
   color: #ddd;
@@ -78,7 +78,7 @@ body {
   justify-content: none;
   align-items: flex-start;
   gap: 10px;
-  width: 60%;
+  width: 80%;
   margin: 10px auto;
   padding: 10px;
   border-radius: 10px;
