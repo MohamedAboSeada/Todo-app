@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap');
+
+// some variables
+$primary-color: #132a13;
+$secondary-color: #90a955;
 body {
 	font-family: 'IBM Plex Sans', 'IBM Plex Sans Arabic';
+	background-color: $primary-color;
 }
 * {
 	margin: 0;
@@ -21,7 +26,7 @@ body {
 	left: 50%;
 	top: -100%;
 	transform: translateX(-50%);
-	background-color: #111;
+	background-color: $primary-color;
 	width: 50%;
 	box-shadow: 0 10px 5px rgba(0, 0, 0, 0.5);
 	z-index: 1000;
@@ -43,6 +48,7 @@ body {
 			font-family: inherit;
 			font-size: 1.3rem;
 			border-radius: 5px;
+			background-color: #ECF39Ea5;
 		}
 		@include flex(column, none, none, 5px);
 	}
@@ -64,23 +70,22 @@ body {
 		}
 	}
 	&.popUp {
-		top: 5px;
+		top: 20px;
 	}
 }
 
 .app {
-	@include flex(row, none, flex-start, 10px);
-	width: 80%;
-	margin: 10px auto;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	width: 100%;
 	padding: 10px;
-	border-radius: 10px;
-	background-color: #2b1887;
-	min-height: calc(100vh - 20px);
 	overflow: auto;
+	gap: 10px;
+	min-height: calc(100vh - 85px);
 	& > div {
-		width: 50%;
+		width: 100%;
 		min-height: inherit;
-		background-color: #d5ccff;
+		background-color: $secondary-color;
 		padding: 10px;
 		border-radius: 5px;
 		// make the layout
@@ -91,21 +96,21 @@ body {
 			& > h1 {
 				@include flex(row, none, center, 10px);
 				text-transform: capitalize;
-				color: #2b1887;
+				color: $primary-color;
 				font-weight: 400;
-				font-size: 2rem;
+				font-size: 1.5rem;
 				user-select: none;
 			}
 			& button {
 				outline: none;
 				border: none;
-				font-size: 2rem;
+				font-size: 1.5rem;
 				cursor: pointer;
 				width: 30px;
 				height: 30px;
 				@include flex(row, center, center, 0);
 				background-color: transparent;
-				color: #2b1887;
+				color: $primary-color;
 			}
 		}
 		& > .tasks {
@@ -126,7 +131,7 @@ body {
 				padding: 20px;
 				@include flex(column, space-between, none, 0px);
 				&.drag {
-					box-shadow: 0 10px 5px #2b188740;
+					box-shadow: 0 10px 5px rgba($color: #000000, $alpha: 0.3);
 				}
 
 				h2 {
@@ -160,7 +165,7 @@ body {
 							}
 						}
 						& > h3 {
-							background-color: #2b1887;
+							background-color: $primary-color;
 							color: #fff;
 							padding: 5px 10px;
 							border-radius: 5px;
@@ -168,7 +173,7 @@ body {
 						}
 					}
 					& > h3 {
-						color: #2b1887;
+						color: $primary-color;
 						text-transform: capitalize;
 						font-weight: 400;
 					}

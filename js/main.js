@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const cancel = modal.querySelector('#cancel');
 	const todoTasks = document.querySelector('.todo .tasks');
 	const doneTasks = document.querySelector('.done .tasks');
+	const inprogressTasks = document.querySelector('.inprogress .tasks');
 
 	let tasks = [];
 	let id = 0;
@@ -23,9 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	// delete all completed tasks
 	deleteAll.addEventListener('click', (_) => {
 		if (doneTasks.hasChildNodes()) {
-			id -= doneTasks.children.length;
+			if (id > 0) {
+				id -= doneTasks.children.length;
+			}
 			doneTasks.innerHTML = '';
-			tasks = tasks.filter((x) => x.status === 'todo');
+			tasks = tasks.filter((x) => {
+				return x.status === 'todo' || x.status === 'inprogress';
+			});
 			localStorage.setItem('tasks', JSON.stringify(tasks));
 			localStorage.setItem('id', id);
 		}
@@ -40,12 +45,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	function loadTasks() {
+		if (localStorage.getItem('id')) {
+			id = +localStorage.getItem('id');
+		}
 		if (localStorage.getItem('tasks')) {
 			tasks = JSON.parse(localStorage.getItem('tasks'));
 
 			// clear all app ui
 			todoTasks.innerHTML = '';
 			doneTasks.innerHTML = '';
+			inprogressTasks.innerHTML = '';
 
 			for (let i of tasks) {
 				console.log(i.status);
@@ -68,6 +77,16 @@ document.addEventListener('DOMContentLoaded', () => {
 						i.priority,
 						i.level,
 						todoTasks
+					);
+				} else if (i.status === 'inprogress') {
+					cardCreate(
+						i.id,
+						i.title,
+						i.category,
+						i.day,
+						i.priority,
+						i.level,
+						inprogressTasks
 					);
 				}
 			}
@@ -178,11 +197,16 @@ document.addEventListener('DOMContentLoaded', () => {
 		ondrop: function (event) {
 			event.target.appendChild(event.relatedTarget);
 			if (event.target.parentNode === document.querySelector('.done')) {
-				event.relatedTarget.classList.add('completed');
 				updateState(event.relatedTarget.id, 'completed');
-			} else {
-				event.relatedTarget.classList.remove('completed');
+			} else if (
+				event.target.parentNode === document.querySelector('.todo')
+			) {
 				updateState(event.relatedTarget.id, 'todo');
+			} else if (
+				event.target.parentNode ===
+				document.querySelector('.inprogress')
+			) {
+				updateState(event.relatedTarget.id, 'inprogress');
 			}
 		},
 	});
