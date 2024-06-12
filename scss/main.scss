@@ -75,10 +75,11 @@ body {
 	padding: 10px;
 	border-radius: 10px;
 	background-color: #2b1887;
-	max-height: calc(100vh - 20px);
+	min-height: calc(100vh - 20px);
+	overflow: auto;
 	& > div {
 		width: 50%;
-		min-height: 150px;
+		min-height: inherit;
 		background-color: #d5ccff;
 		padding: 10px;
 		border-radius: 5px;

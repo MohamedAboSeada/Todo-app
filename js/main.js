@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const doneTasks = document.querySelector('.done .tasks');
 
 	let tasks = [];
+	let id = 0;
 
 	// the button used to popup the modal
 	addBtn.addEventListener('click', (_) => {
@@ -21,16 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// delete all completed tasks
 	deleteAll.addEventListener('click', (_) => {
-		document.querySelector('.done .tasks').innerHTML = '';
-		tasks = JSON.parse(localStorage.getItem('tasks'));
-
-		[...tasks].forEach((task, index) => {
-			if (task.status === 'completed') {
-				tasks.splice(index, 1);
-			}
-		});
-
-		localStorage.setItem('tasks', tasks);
+		if (doneTasks.hasChildNodes()) {
+			id -= doneTasks.children.length;
+			doneTasks.innerHTML = '';
+			tasks = tasks.filter((x) => x.status === 'todo');
+			localStorage.setItem('tasks', JSON.stringify(tasks));
+			localStorage.setItem('id', id);
+		}
 	});
 
 	tippy(deleteAll, {
@@ -44,12 +42,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	function loadTasks() {
 		if (localStorage.getItem('tasks')) {
 			tasks = JSON.parse(localStorage.getItem('tasks'));
+
+			// clear all app ui
 			todoTasks.innerHTML = '';
 			doneTasks.innerHTML = '';
+
 			for (let i of tasks) {
 				console.log(i.status);
 				if (i.status === 'completed') {
 					cardCreate(
+						i.id,
 						i.title,
 						i.category,
 						i.day,
@@ -59,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					);
 				} else if (i.status === 'todo') {
 					cardCreate(
+						i.id,
 						i.title,
 						i.category,
 						i.day,
@@ -78,10 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		localStorage.setItem('tasks', JSON.stringify(tasks));
 	}
 
-	function cardCreate(title, cat, date, priority, level, parent) {
+	function cardCreate(id, title, cat, date, priority, level, parent) {
 		let card = document.createElement('div');
 
 		card.classList.add('card');
+		card.id = id;
 
 		card.innerHTML = `
         <h2>${title}</h2>
@@ -114,18 +118,17 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
-	function updateState(text, newState) {
-		let tasks = JSON.parse(localStorage.getItem('tasks'));
-		console.log(
-			JSON.stringify(tasks[0].id),
-			JSON.stringify(CryptoJS.SHA1(text))
-		);
-		for (let i of tasks) {
-			if (JSON.stringify(i.id) === JSON.stringify(CryptoJS.SHA1(text))) {
+	function updateState(id, newState) {
+		let taskss = JSON.parse(localStorage.getItem('tasks'));
+
+		for (let i of taskss) {
+			if (i.id === +id) {
 				i.status = newState;
 			}
 		}
-		localStorage.setItem('tasks', JSON.stringify(tasks));
+
+		tasks = taskss;
+		localStorage.setItem('tasks', JSON.stringify(taskss));
 	}
 
 	add.addEventListener('click', (_) => {
@@ -138,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		let level = modal.querySelector('#level');
 
 		let task = {
-			id: CryptoJS.SHA1(title.value),
+			id: id,
 			title: title.value,
 			category: cat.value,
 			day: date.value,
@@ -146,10 +149,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			level: level.value,
 			status: 'todo',
 		};
-
 		savetask(task);
 
 		cardCreate(
+			id,
 			title.value,
 			cat.value,
 			date.value,
@@ -157,6 +160,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			level.value,
 			todoTasks
 		);
+
+		id++;
+		localStorage.setItem('id', id);
 	});
 
 	// Enable draggable functionality on task cards
@@ -173,16 +179,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			event.target.appendChild(event.relatedTarget);
 			if (event.target.parentNode === document.querySelector('.done')) {
 				event.relatedTarget.classList.add('completed');
-				updateState(
-					event.relatedTarget.children[0].textContent,
-					'completed'
-				);
+				updateState(event.relatedTarget.id, 'completed');
 			} else {
 				event.relatedTarget.classList.remove('completed');
-				updateState(
-					event.relatedTarget.children[0].textContent,
-					'todo'
-				);
+				updateState(event.relatedTarget.id, 'todo');
 			}
 		},
 	});
